@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class HttpService {
+class HTTPService {
   final Dio _dio = Dio();
 
-  HttpService() {
+  HTTPService() {
     _configureDio();
   }
 
@@ -15,5 +15,14 @@ class HttpService {
         "api_key": dotenv.env['CRYPTO_RANK_API_KEY'],
       },
     );
+  }
+
+  Future<dynamic> get({required String path}) async {
+    try {
+      Response res = await _dio.get(path);
+      return res.data;
+    } catch (e) {
+      print(e);
+    }
   }
 }
