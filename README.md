@@ -1,4 +1,4 @@
-# getx_state_mgmt
+# crypto_portfolio
 
 A new Flutter project.
 
