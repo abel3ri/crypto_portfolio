@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:getx_state_mgmt/widgets/add_asset_dialog.dart';
 
 class HomePage extends StatelessWidget {

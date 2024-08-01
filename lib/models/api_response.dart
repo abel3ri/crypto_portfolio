@@ -66,13 +66,14 @@ class Status {
   int? responseTime;
   int? creditsCost;
 
-  Status(
-      {this.success,
-      this.time,
-      this.code,
-      this.message,
-      this.responseTime,
-      this.creditsCost});
+  Status({
+    this.success,
+    this.time,
+    this.code,
+    this.message,
+    this.responseTime,
+    this.creditsCost,
+  });
 
   Status.fromJson(Map<String, dynamic> json) {
     success = json['success'];

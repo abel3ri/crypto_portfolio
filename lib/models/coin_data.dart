@@ -16,23 +16,24 @@ class CoinData {
   String? lastUpdated;
   Images? images;
 
-  CoinData(
-      {this.id,
-      this.slug,
-      this.symbol,
-      this.name,
-      this.type,
-      this.category,
-      this.rank,
-      this.volume24hBase,
-      this.values,
-      this.tokens,
-      this.links,
-      this.circulatingSupply,
-      this.totalSupply,
-      this.maxSupply,
-      this.lastUpdated,
-      this.images});
+  CoinData({
+    this.id,
+    this.slug,
+    this.symbol,
+    this.name,
+    this.type,
+    this.category,
+    this.rank,
+    this.volume24hBase,
+    this.values,
+    this.tokens,
+    this.links,
+    this.circulatingSupply,
+    this.totalSupply,
+    this.maxSupply,
+    this.lastUpdated,
+    this.images,
+  });
 
   CoinData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
