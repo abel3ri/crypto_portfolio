@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_state_mgmt/controllers/assets_controller.dart';
+import 'package:getx_state_mgmt/models/api_response.dart';
 import 'package:getx_state_mgmt/services/http_service.dart';
 
 class AddAssetDialogController extends GetxController {
   RxBool loading = false.obs;
+  RxList<String> assets = <String>[].obs;
+  RxString selectedAsset = "".obs;
+  RxDouble assetValue = 0.0.obs;
 
   @override
   void onInit() {
@@ -14,16 +19,21 @@ class AddAssetDialogController extends GetxController {
   Future<void> _getAssets() async {
     loading.value = true;
     HTTPService httpService = Get.find<HTTPService>();
-    dynamic data = await httpService.get(path: "currencies");
-    print(data);
+    dynamic responseData = await httpService.get(path: "currencies");
+    CurrenciesListAPIResponse currenciesListAPIResponse =
+        CurrenciesListAPIResponse.fromJson(responseData);
+
+    currenciesListAPIResponse.data!.forEach((el) {
+      assets.add(el.name!);
+    });
+    selectedAsset.value = assets.first;
+
     loading.value = false;
   }
 }
 
 class AddAssetDialog extends StatelessWidget {
-  final controller = Get.put(
-    AddAssetDialogController(),
-  );
+  final controller = Get.put(AddAssetDialogController());
 
   AddAssetDialog({super.key});
 
@@ -39,14 +49,14 @@ class AddAssetDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
             ),
-            child: _buildUI(),
+            child: _buildUI(context: context),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildUI() {
+  Widget _buildUI({required BuildContext context}) {
     if (controller.loading.isTrue) {
       return Center(
         child: SizedBox(
@@ -56,11 +66,59 @@ class AddAssetDialog extends StatelessWidget {
         ),
       );
     }
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("Data loaded"),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 12,
+        right: 12,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          DropdownButton(
+            value: controller.selectedAsset.value,
+            items: controller.assets.map((asset) {
+              return DropdownMenuItem(
+                value: asset,
+                child: Text(asset),
+              );
+            }).toList(),
+            onChanged: (value) {
+              if (value != null) {
+                controller.selectedAsset.value = value;
+              }
+              ;
+            },
+          ),
+          TextField(
+            onChanged: (value) {
+              controller.assetValue.value = double.parse(value);
+            },
+            keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+            ),
+          ),
+          MaterialButton(
+            onPressed: () {
+              final assetsController = Get.find<AssetsController>();
+              assetsController.add(
+                name: controller.selectedAsset.value,
+                amount: controller.assetValue.value,
+              );
+            },
+            color: Theme.of(context).colorScheme.primary,
+            child: Text(
+              "Add",
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
