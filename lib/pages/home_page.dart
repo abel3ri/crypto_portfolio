@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
 
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
-      title: CircleAvatar(
+      title: const CircleAvatar(
         backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=12"),
       ),
       actions: [
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
           onPressed: () {
             Get.dialog(AddAssetDialog());
           },
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
         ),
       ],
     );
@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
           textAlign: TextAlign.center,
           TextSpan(
             children: [
-              TextSpan(
+              const TextSpan(
                 text: "\$",
                 style: TextStyle(
                   fontSize: 18,
@@ -68,12 +68,12 @@ class HomePage extends StatelessWidget {
               TextSpan(
                 text:
                     '${assetsController.getPortfolioValue().toStringAsFixed(2)}\n',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 45,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              TextSpan(
+              const TextSpan(
                 text: "Portfolio value",
               ),
             ],

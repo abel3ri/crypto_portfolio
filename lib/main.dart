@@ -9,7 +9,7 @@ void main(List<String> args) async {
   await dotenv.load(fileName: ".env");
   await registerServices();
   await registerControllers();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

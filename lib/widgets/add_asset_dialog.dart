@@ -23,9 +23,9 @@ class AddAssetDialogController extends GetxController {
     CurrenciesListAPIResponse currenciesListAPIResponse =
         CurrenciesListAPIResponse.fromJson(responseData);
 
-    currenciesListAPIResponse.data!.forEach((el) {
+    for (var el in currenciesListAPIResponse.data!) {
       assets.add(el.name!);
-    });
+    }
     selectedAsset.value = assets.first;
 
     loading.value = false;
@@ -62,7 +62,7 @@ class AddAssetDialog extends StatelessWidget {
 
   Widget _buildUI({required BuildContext context}) {
     if (controller.loading.isTrue) {
-      return Center(
+      return const Center(
         child: SizedBox(
           width: 30,
           height: 30,
@@ -100,7 +100,7 @@ class AddAssetDialog extends StatelessWidget {
             },
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.done,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
           ),
@@ -113,7 +113,7 @@ class AddAssetDialog extends StatelessWidget {
               );
               Get.back(closeOverlays: true);
             },
-            child: Text(
+            child: const Text(
               "Add",
               style: TextStyle(
                 color: Colors.white,

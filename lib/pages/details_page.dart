@@ -16,7 +16,7 @@ class DetailsPage extends StatelessWidget {
 
   PreferredSizeWidget _appBar() {
     return AppBar(
-      title: Text(this.coin.name!),
+      title: Text(coin.name!),
       centerTitle: true,
     );
   }
@@ -54,7 +54,7 @@ class DetailsPage extends StatelessWidget {
                 TextSpan(
                   text:
                       "\$${coin.values?.uSD?.price?.toStringAsFixed(2) ?? 0}\n",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 25,
                   ),
                 ),
@@ -79,7 +79,7 @@ class DetailsPage extends StatelessWidget {
   Widget _assetInfo({required BuildContext context}) {
     return Expanded(
       child: GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 0.9,
           mainAxisSpacing: 12,

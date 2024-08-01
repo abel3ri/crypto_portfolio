@@ -69,9 +69,9 @@ class AssetsController extends GetxController {
       return 0;
     }
     double value = 0;
-    trackedAssets.forEach((asset) {
+    for (var asset in trackedAssets) {
       value += getAssetPrice(name: asset.name!) * asset.amount!;
-    });
+    }
 
     return value;
   }
