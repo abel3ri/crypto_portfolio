@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 void main(List<String> args) async {
   await dotenv.load(fileName: ".env");
   await registerServices();
+  await registerControllers();
   runApp(MyApp());
 }
 
