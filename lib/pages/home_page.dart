@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_state_mgmt/controllers/assets_controller.dart';
+import 'package:getx_state_mgmt/pages/details_page.dart';
 import 'package:getx_state_mgmt/utils.dart';
 import 'package:getx_state_mgmt/widgets/add_asset_dialog.dart';
 
@@ -20,7 +21,7 @@ class HomePage extends StatelessWidget {
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
       title: CircleAvatar(
-        backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=3"),
+        backgroundImage: NetworkImage("https://i.pravatar.cc/150?img=12"),
       ),
       actions: [
         IconButton(
@@ -97,9 +98,9 @@ class HomePage extends StatelessWidget {
             child: Text(
               "Portfolio",
               style: TextStyle(
-                fontSize: 10,
-                color: Colors.black38,
-                fontWeight: FontWeight.w500,
+                fontSize: 15,
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
@@ -109,6 +110,15 @@ class HomePage extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () {
+                    Get.to(() {
+                      return DetailsPage(
+                        coin: assetsController.getCoinData(
+                          name: assetsController.trackedAssets[index].name!,
+                        )!,
+                      );
+                    });
+                  },
                   leading: Image.network(
                     getCryptoImageURl(
                         name: assetsController.trackedAssets[index].name!),
