@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_state_mgmt/controllers/assets_controller.dart';
+import 'package:getx_state_mgmt/utils.dart';
 import 'package:getx_state_mgmt/widgets/add_asset_dialog.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,6 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: _appBar(context),
       body: _buildUI(context: context),
     );
@@ -37,6 +39,7 @@ class HomePage extends StatelessWidget {
         () => Column(
           children: [
             _portfolioValue(context: context),
+            _trackedAssetsList(context: context),
           ],
         ),
       ),
@@ -75,6 +78,54 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _trackedAssetsList({required BuildContext context}) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: MediaQuery.sizeOf(context).width * 0.03,
+        right: MediaQuery.sizeOf(context).width * 0.03,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height * 0.05,
+            child: Text(
+              "Portfolio",
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.black38,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height * 0.65,
+            width: MediaQuery.sizeOf(context).width,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: Image.network(
+                    getCryptoImageURl(
+                        name: assetsController.trackedAssets[index].name!),
+                  ),
+                  title: Text(assetsController.trackedAssets[index].name!),
+                  subtitle: Text(
+                    'USD: ${assetsController.getAssetPrice(name: assetsController.trackedAssets[index].name!).toStringAsFixed(2)}',
+                  ),
+                  trailing: Text(
+                    '${assetsController.trackedAssets[index].amount!}',
+                  ),
+                );
+              },
+              itemCount: assetsController.trackedAssets.length,
+            ),
+          ),
+        ],
       ),
     );
   }
