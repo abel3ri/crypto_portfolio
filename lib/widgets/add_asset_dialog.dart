@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:getx_state_mgmt/controllers/assets_controller.dart';
 import 'package:getx_state_mgmt/models/api_response.dart';
@@ -108,7 +107,7 @@ class AddAssetDialog extends StatelessWidget {
           FilledButton(
             onPressed: () {
               final assetsController = Get.find<AssetsController>();
-              assetsController.add(
+              assetsController.addTrackedAsset(
                 name: controller.selectedAsset.value,
                 amount: controller.assetValue.value,
               );
