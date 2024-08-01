@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:getx_state_mgmt/controllers/assets_controller.dart';
 import 'package:getx_state_mgmt/models/api_response.dart';
@@ -40,16 +41,20 @@ class AddAssetDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Center(
-        child: Material(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.4,
-            width: MediaQuery.of(context).size.width * 0.8,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
+      () => Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+        child: Center(
+          child: Material(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              width: MediaQuery.of(context).size.width * 0.8,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white,
+              ),
+              child: _buildUI(context: context),
             ),
-            child: _buildUI(context: context),
           ),
         ),
       ),
@@ -88,7 +93,6 @@ class AddAssetDialog extends StatelessWidget {
               if (value != null) {
                 controller.selectedAsset.value = value;
               }
-              ;
             },
           ),
           TextField(
@@ -101,15 +105,15 @@ class AddAssetDialog extends StatelessWidget {
               border: OutlineInputBorder(),
             ),
           ),
-          MaterialButton(
+          FilledButton(
             onPressed: () {
               final assetsController = Get.find<AssetsController>();
               assetsController.add(
                 name: controller.selectedAsset.value,
                 amount: controller.assetValue.value,
               );
+              Get.back(closeOverlays: true);
             },
-            color: Theme.of(context).colorScheme.primary,
             child: Text(
               "Add",
               style: TextStyle(
